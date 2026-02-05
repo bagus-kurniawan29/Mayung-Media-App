@@ -50,6 +50,7 @@ class NewsItem extends StatelessWidget {
                 tanggal: tanggal,
                 author: author,
                 Imagepath: Imagepath,
+            
               ),
             ),
           );

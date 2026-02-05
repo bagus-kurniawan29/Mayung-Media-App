@@ -3,6 +3,7 @@ import 'package:mayung_media/recent_news.dart';
 import 'package:mayung_media/themes/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mayung_media/news_item.dart';
+import 'package:mayung_media/category.dart';
 import 'dart:async';
 
 void main() => runApp(
@@ -25,12 +26,10 @@ class _MayungAppState extends State<MayungApp> {
   int _currentPage = 0;
   Timer? _timer;
 
-  
   final List<Map<String, String>> _featuredData = [
     {
       'kategori': 'BERDAYA',
-      'judul':
-          'Fakultas Teknik Universitas Hamzanwadi sukses menggelar IRIC 2026',
+      'judul':'Fakultas Teknik Universitas Hamzanwadi sukses menggelar IRIC 2026',
       'image': 'assets/images/IMG_1344.JPG',
       'date': '27 January 2026',
     },
@@ -42,25 +41,25 @@ class _MayungAppState extends State<MayungApp> {
     },
     {
       'kategori': 'BUDAYA',
-      'judul': 'Eksistensi Cupak Gerantang di Era Gempuran Digital',
-      'image': 'assets/images/budaya 2.webp',
+      'judul': 'Cupak Gerantang: Dari Dongeng Tidur Hingga Pentas Jalanan',
+      'image': 'assets/images/Budaya 2.webp',
       'date': '27 January 2026',
     },
   ];
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < _featuredData.length - 1) {
         _currentPage++;
       } else {
-        _currentPage = 0; 
+        _currentPage = 0;
       }
       if (_pageController.hasClients) {
         _pageController.animateToPage(
           _currentPage,
-          duration: const Duration(milliseconds: 800), 
-          curve: Curves.easeInOutQuint, 
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOutQuint,
         );
       }
     });
@@ -68,10 +67,11 @@ class _MayungAppState extends State<MayungApp> {
 
   @override
   void dispose() {
-    _timer?.cancel(); 
+    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +109,6 @@ class _MayungAppState extends State<MayungApp> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Divider(thickness: 1, color: Colors.white24),
               ),
-
               const SizedBox(height: 12),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -119,36 +118,30 @@ class _MayungAppState extends State<MayungApp> {
                   children: [
                     RecentNews(
                       kategori: 'ALAM',
-                      judul:
-                          'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
+                      judul:'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
                       author: 'Redaksi Mayung Media',
-                      konten:
-                          "Upaya pemetaan kembali kekayaan pangan lokal di Desa Karang Bajo sebagai langkah penyelamatan kedaulatan pangan di tengah ancaman krisis iklim global.",
+                      konten:"Upaya pemetaan kembali kekayaan pangan lokal di Desa Karang Bajo sebagai langkah penyelamatan kedaulatan pangan di tengah ancaman krisis iklim global.",
                       views: '231',
                       tanggal: '01-2-2026',
                       imagepath: 'assets/images/Alam.webp',
                     ),
                     RecentNews(
                       kategori: 'BERDAYA',
-                      judul:
-                          'FT Hamzanwadi Sukses Gelar Informatics Robotic Innovation Cup 2026',
+                      judul:'Fakultas Teknik Hamzanwadi Sukses Gelar Informatics Robotic Innovation Cup 2026',
                       author: 'Redaksi Mayung Media',
-                      konten:
-                          "Ajang IRIC 2026 menjadi panggung inovasi bagi talenta muda. Kompetisi ini berhasil menarik antusiasme peserta hingga dari luar Pulau Lombok.",
+                      konten:"Ajang IRIC 2026 menjadi panggung inovasi bagi talenta muda. Kompetisi ini berhasil menarik antusiasme peserta hingga dari luar Pulau Lombok.",
                       views: '452',
                       tanggal: '01-2-2026',
                       imagepath: 'assets/images/IMG_1344.JPG',
                     ),
                     RecentNews(
                       kategori: 'BUDAYA',
-                      judul:
-                          'Cupak Gerantang: Dari Dongeng Tidur Hingga Pentas Jalanan',
+                      judul:'Cupak Gerantang: Dari Dongeng Tidur Hingga Pentas Jalanan',
                       author: 'Redaksi Mayung Media',
-                      konten:
-                          "Menelusuri jejak tradisi lisan Sasak, Cupak Gerantang bukan sekadar dongeng, melainkan refleksi karakter manusia yang tertuang dalam seni pertunjukan.",
+                      konten:"Menelusuri jejak tradisi lisan Sasak, Cupak Gerantang bukan sekadar dongeng, melainkan refleksi karakter manusia yang tertuang dalam seni pertunjukan.",
                       views: '189',
                       tanggal: '01-2-2026',
-                      imagepath: 'assets/images/budaya 2.webp',
+                      imagepath: 'assets/images/Budaya 2.webp',
                     ),
                     RecentNews(
                       kategori: 'SUARA',
@@ -163,10 +156,7 @@ class _MayungAppState extends State<MayungApp> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              
               _buildCategoryBlock(
                 'ALAM',
                 "Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara",
@@ -182,7 +172,7 @@ class _MayungAppState extends State<MayungApp> {
               _buildCategoryBlock(
                 'BUDAYA',
                 "Cupak Gerantang: Tradisi Sasak yang Tetap Eksis di Era Modern",
-                'assets/images/budaya 2.webp',
+                'assets/images/Budaya 2.webp',
                 'Redaksi Mayung Media',
               ),
               _buildCategoryBlock(
@@ -198,6 +188,7 @@ class _MayungAppState extends State<MayungApp> {
       ),
     );
   }
+
   Widget _buildFeaturedNews() {
     return SizedBox(
       height: 300,
@@ -225,9 +216,7 @@ class _MayungAppState extends State<MayungApp> {
                   height: 8,
                   width: _currentPage == index ? 25 : 8,
                   decoration: BoxDecoration(
-                    color: _currentPage == index
-                        ? Colors.blue
-                        : Colors.white70,
+                    color: _currentPage == index ? Colors.blue : Colors.white70,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -312,9 +301,7 @@ class _MayungAppState extends State<MayungApp> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
-      color: category == 'ALAM'
-          ? AppColors.secondary
-          : Colors.transparent, 
+      color: AppColors.secondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -331,13 +318,19 @@ class _MayungAppState extends State<MayungApp> {
                   color: Colors.white,
                 ),
               ),
-              const Text(
-                'Lihat Semua',
-                style: TextStyle(
-                  fontFamily: 'primary',
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                  color: Colors.white,
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryPage(namaKategori: category),
+                  ),
+                ),
+                child: const Text(
+                  "Lihat Semua",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

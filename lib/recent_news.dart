@@ -60,7 +60,7 @@ class RecentNews extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 15),
         padding: const EdgeInsets.all(12),
         width: 250,
-        height: 400,
+        height: 500,
         decoration: BoxDecoration(color: Colors.transparent),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
