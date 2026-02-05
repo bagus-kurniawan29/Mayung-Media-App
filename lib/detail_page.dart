@@ -5,11 +5,39 @@ import 'package:mayung_media/themes/themes.dart';
 class DetailPage extends StatelessWidget {
   final String title;
   final String category;
+  final String konten;
+  final String tanggal;
+  final String author;
+  final String Imagepath;
 
-  const DetailPage({super.key, required this.title, required this.category});
+  const DetailPage({
+    super.key,
+    required this.title,
+    required this.category,
+    required this.konten,
+    required this.tanggal,
+    required this.author,
+    required this.Imagepath,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Color categoryColor;
+    switch (category.toUpperCase()) {
+      case 'ALAM':
+        categoryColor = Colors.green;
+        break;
+      case 'BUDAYA':
+        categoryColor = Colors.brown;
+        break;
+      case 'BERDAYA':
+        categoryColor = Colors.orange;
+        break;
+      case 'SUARA':
+        categoryColor = Colors.blueGrey;
+      default:
+        categoryColor = Colors.grey;
+    }
     return Scaffold(
       backgroundColor: AppColors.secondary,
       appBar: AppBar(
@@ -18,153 +46,121 @@ class DetailPage extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
             Container(
-              height: 300,
               width: double.infinity,
               color: AppColors.primary,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 60),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: categoryColor,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      category.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'judul',
+                      height: 1.3,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  _buildAuthorSection(author, tanggal),
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 40,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        category.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: 'judul',
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      _buildAuthorSection(),
-                      const SizedBox(height: 30),
-                      _buildOverlappingImage(),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  color: AppColors.secondary,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25),
-                        child: Column(
-                          children: [
-                            const Text(
-                              textAlign: TextAlign.justify,
-                              "Isi berita dimulai di sini... Mayung Media menyajikan informasi mendalam untuk masyarakat Nusa Tenggara Barat.",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                height: 1.8,
-                              ),
-                            ),
-                            const SizedBox(height: 50),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Artikel Yang Mungkin Anda Suka',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'judul',
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 15,),
-                            Divider(
-                              thickness: 1,
-                              color: AppColors.muted,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            _buildRecentNewsItemPlaceholder(),
-                            SizedBox(height: 20),
-                            _buildRecentNewsItemPlaceholder(),
-                            SizedBox(height: 20),
-                            _buildRecentNewsItemPlaceholder(),
-                          ],
-                        ),
-                      ),
-                      _buildFooter(context),
-                    ],
-                  ),
-                ),
-              ],
+
+            Transform.translate(
+              offset: const Offset(0, -40),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: _buildOverlappingImage(Imagepath),
+              ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    konten,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                      height: 1.8,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Divider(color: Colors.white24),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Artikel Yang Mungkin Anda Suka',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  _buildRecentNewsItemPlaceholder(),
+                  _buildRecentNewsItemPlaceholder(),
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+
+            // FOOTER
+            _buildFooter(context),
           ],
         ),
       ),
     );
   }
 
-  // WIDGET
-  Widget _buildAuthorSection() {
+  Widget _buildAuthorSection(String name, String date) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ClipOval(
-          child: Image.asset(
-            'assets/images/author.webp',
-            height: 45,
-            width: 45,
-            fit: BoxFit.cover,
-          ),
+        const CircleAvatar(
+          radius: 22,
+          backgroundImage: AssetImage('assets/images/author.webp'),
         ),
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Redaksi Mayung Media',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+            Text(
+              name,
+              style: const TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Row(
-              children: [
-                const Text(
-                  '02 Feb 2026',
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
-                ),
-                const SizedBox(width: 12),
-                const FaIcon(
-                  FontAwesomeIcons.solidEye,
-                  size: 11,
-                  color: Colors.white54,
-                ),
-                const SizedBox(width: 5),
-                const Text(
-                  '231 Views',
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
-                ),
-              ],
+            Text(
+              "$date • 231 Views",
+              style: const TextStyle(color: Colors.white54, fontSize: 12),
             ),
           ],
         ),
@@ -172,146 +168,68 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  // WIDGET
-  Widget _buildOverlappingImage() {
-    return Stack(
-      alignment: Alignment.center,
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: double.infinity,
-          height: 230,
-          decoration: BoxDecoration(
-            color: AppColors.secondary,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: const Icon(
-            Icons.image_outlined,
-            color: Colors.white10,
-            size: 60,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // WIDGET
-  Widget _buildFooter(BuildContext context) {
+  Widget _buildOverlappingImage(String path) {
     return Container(
-      color: AppColors.primary,
-      child: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 25, vertical: 60),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset('assets/images/logo_putih.webp', height: 80, width: 80),
-            SizedBox(height: 20),
-            Text(
-              'Mayung Media adalah kanal berita di Nusa Tenggara Barat. Kami menyajikan informasi secara lebih mendalam.',
-              style: TextStyle(
-                fontFamily: 'primary',
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Hubungi Kami',
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'mayung.id@gmail.com',
-              style: TextStyle(
-                fontFamily: 'primary',
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Media Sosial',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
-            ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.facebook,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.instagram,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.tiktok,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                ),
-              ],
-            ),
-          ],
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          path,
+          width: double.infinity,
+          height: 250,
+          fit: BoxFit.cover,
         ),
       ),
     );
   }
-}
-Widget _buildRecentNewsItemPlaceholder() {
+
+  Widget _buildFooter(BuildContext context) {
     return Container(
-      width: 350,
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.transparent),
+      width: double.infinity,
+      color: AppColors.primary,
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 350,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: const Icon(Icons.image, color: Colors.white24, size: 40),
+          Image.asset('assets/images/logo_putih.webp', height: 60),
+          const SizedBox(height: 20),
+          const Text(
+            'Mayung Media menyajikan informasi mendalam seputar Nusa Tenggara Barat.',
+            style: TextStyle(color: Colors.white70, fontSize: 14),
           ),
-          const SizedBox(height: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(height: 30),
+          const Text(
+            'Media Sosial',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Row(
             children: [
-              // Tag Kategori
-              Container(
-                height: 10,
-                width: 60,
-                color: Colors.blueAccent.withOpacity(0.3),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  FontAwesomeIcons.facebook,
+                  color: Colors.white,
+                ),
               ),
-              const SizedBox(height: 12),
-              // Baris Judl
-              Container(height: 18, width: 250, color: Colors.white10),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(height: 18, width: 100, color: Colors.white10),
-                  Container(height: 18, width: 100, color: Colors.white10),
-                ],
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  FontAwesomeIcons.instagram,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -319,3 +237,42 @@ Widget _buildRecentNewsItemPlaceholder() {
       ),
     );
   }
+
+  Widget _buildRecentNewsItemPlaceholder() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          Container(
+            width: 100,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.white10,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(Icons.image, color: Colors.white24),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 12,
+                  width: 60,
+                  color: Colors.blue.withOpacity(0.3),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  height: 15,
+                  width: double.infinity,
+                  color: Colors.white10,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

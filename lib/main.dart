@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mayung_media/recent_news.dart';
 import 'package:mayung_media/themes/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mayung_media/test.dart';
-// import 'package:http/http.dart' as http; // API sementara di-comment
+import 'package:mayung_media/news_item.dart';
+// import 'package:http/http.dart' as http; // API
 // import 'dart:convert';
-// import 'package:sqflite/sqflite.dart'; // Database sementara di-comment
+// import 'package:sqflite/sqflite.dart'; // Database
 
 void main() => runApp(
   MaterialApp(
@@ -68,11 +69,51 @@ class _MayungAppState extends State<MayungApp> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    _buildRecentNewsItemPlaceholder(),
-                    _buildRecentNewsItemPlaceholder(),
-                    _buildRecentNewsItemPlaceholder(),
-                    _buildRecentNewsItemPlaceholder(),
-                    _buildRecentNewsItemPlaceholder(),
+                    RecentNews(
+                      kategori: 'ALAM',
+                      judul:
+                          'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
+                      author: 'Redaksi Mayung Media',
+                      konten:
+                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
+                      tanggal: '01-Februari-2026',
+                      views: '231',
+                      imagepath: 'assets/images/Alam.webp',
+                    ),
+                    RecentNews(
+                      kategori: 'BERDAYA',
+                      judul:
+                          'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
+                      author: 'Redaksi Mayung Media',
+                      konten:
+                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
+                      tanggal: '01-Februari-2026',
+                      views: '231',
+                      imagepath: 'assets/images/IMG_1344.JPG',
+                    ),
+                    RecentNews(
+                      kategori: 'BUDAYA',
+                      judul:
+                          'Cupak Gerantang, Dari Dongeng Tidur Hingga Pentas Jalanan',
+                      author: 'Redaksi Mayung Media',
+                      konten:
+                          "Tjoepak bebeling : ‘’ Adi’ Gerantang, tain apa ? / meni bele’ penoempoekna mara’ gili ?...",
+                      tanggal: '27-Januari-2026',
+                      views: '189',
+                      imagepath: 'assets/images/budaya 2.webp',
+                    ),
+
+                    // BERITA 4: SUARA
+                    RecentNews(
+                      kategori: 'SUARA',
+                      judul: 'Keluarga Nomaden di kawasan Wisata Medana',
+                      author: 'Fathul Rakhman',
+                      konten:
+                          "Tinggal di kawasan pariwisata Medana tidak membuat hidup Kerta lebih baik. Bersama istri dan enam anaknya, Kerta hidup terlunta-lunta...",
+                      tanggal: '27-Januari-2026',
+                      views: '312',
+                      imagepath: 'assets/images/SUARA 2.webp',
+                    ),
                   ],
                 ),
               ),
@@ -111,7 +152,16 @@ class _MayungAppState extends State<MayungApp> {
                     const SizedBox(height: 12),
                     const Divider(thickness: 1, color: Colors.white10),
                     const SizedBox(height: 16),
-                    NewsItem(judul: "Misteri Alam Nusantara", kategori: "ALAM"),
+                    NewsItem(
+                      judul:
+                          "Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara",
+                      kategori: "ALAM",
+                      konten:
+                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
+                      tanggal: '01-02-2006',
+                      author: 'Redaksi Mayung Media',
+                      Imagepath: 'assets/images/Alam.webp',
+                    ),
                     const SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,7 +190,16 @@ class _MayungAppState extends State<MayungApp> {
                     const SizedBox(height: 12),
                     const Divider(thickness: 1, color: Colors.white10),
                     const SizedBox(height: 16),
-                    _NewsPlaceholder(),
+                    NewsItem(
+                      judul:
+                          "Fakultas Teknik Universtas Hamzanwadi sukses menggelar INFORMATICS ROBOTICS INOVATION CUP 2026",
+                      kategori: "BERDAYA",
+                      konten:
+                          "Fakultas Teknik Universitas Hamzanwadi sukses menuntaskan perhelatan bergengsi Informatics Robotic Innovation Cup (IRIC) 2026. Dimulai sejak Jumat (23/01), ajang ini berhasil menjadi panggung inovasi bagi talenta-talenta muda di bidang teknologi dan robotika.",
+                      tanggal: '27-01-2006',
+                      author: 'Redaksi Mayung Media',
+                      Imagepath: 'assets/images/IMG_1344.JPG',
+                    ),
 
                     const SizedBox(height: 40),
                     Row(
@@ -170,7 +229,53 @@ class _MayungAppState extends State<MayungApp> {
                     const SizedBox(height: 12),
                     const Divider(thickness: 1, color: Colors.white10),
                     const SizedBox(height: 16),
-                    _NewsPlaceholder(),
+                    NewsItem(
+                      judul:
+                          "Cupak Gerantang, Dari Dongeng Tidur Hingga Pentas Jalanan",
+                      kategori: "BUDAYA",
+                      konten:
+                          "Tjoepak bebeling : ‘’ Adi’ Gerantang, tain apa ? / meni bele’ penoempoekna mara’ gili ? / ‘’ Ia mene’ tain Limandaroeng ‘’ / Lo’ Tjoepak gigit perangenna / peno’ sedo’ gigi ngerejot soegoel daoer / ‘’ Doeh mas mirah adi’ Gerantang, ente pada oele’ malik ‘’",
+                      tanggal: '27-01-2006',
+                      author: 'Redaksi Mayung Media',
+                      Imagepath: 'assets/images/budaya 2.webp',
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'SUARA',
+                          style: TextStyle(
+                            fontSize: 21,
+                            fontFamily: 'judul',
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 3,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Lihat Semua',
+                          style: TextStyle(
+                            fontFamily: 'primary',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    const Divider(thickness: 1, color: Colors.white10),
+                    const SizedBox(height: 16),
+                    NewsItem(
+                      judul: "Keluarga Nomaden di kawasann Wisata",
+                      kategori: "SUARA",
+                      konten:
+                          "Tinggal di kawasan pariwisata Medana, Kecamatan Tanjung, Kabupaten Lombok Utara tidak membuat hidup Kerta lebih baik. Bersama istri dan enam orang anaknya, Kerta hidup terlunta-lunta. Pindah dari satu tanah kosong ke tanah kosong lainnya. Kadang membuat gubuk di pinggir pantai. Dia tidak terlahir sebagai orang terlantar, keluarganya pernah memiliki tanah di kawasan pariwisata itu. Di tanah bekas milik keluarganya itulah Kerta menumpang. Inilah kisah tentang Kerta dan ‘’orang-orang kalah’’ di kawasan pariwisata.",
+                      tanggal: '27-01-2006',
+                      author: 'Fathul Rakhman',
+                      Imagepath: 'assets/images/SUARA 2.webp',
+                    ),
                   ],
                 ),
               ),
@@ -297,7 +402,7 @@ class _MayungAppState extends State<MayungApp> {
                     ),
                     color: Colors.blue,
                     child: const Text(
-                      "Teknologi",
+                      "BERDAYA",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -318,7 +423,7 @@ class _MayungAppState extends State<MayungApp> {
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    "Oleh Fathul Rakhman  •  30 January 2026",
+                    "Oleh Redaksi Mayung Media  •  27 January 2026",
                     style: TextStyle(color: Colors.white70, fontSize: 12),
                   ),
                 ],
@@ -326,109 +431,6 @@ class _MayungAppState extends State<MayungApp> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildRecentNewsItemPlaceholder() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.transparent),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 250,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: const Icon(Icons.image, color: Colors.white24, size: 40),
-          ),
-          const SizedBox(height: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Tag Kategori
-              Container(
-                height: 10,
-                width: 60,
-                color: Colors.blueAccent.withOpacity(0.3),
-              ),
-              const SizedBox(height: 12),
-
-              // Baris Judl
-              Container(height: 18, width: 250, color: Colors.white10),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(height: 18, width: 100, color: Colors.white10),
-                  Container(height: 18, width: 100, color: Colors.white10),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget _NewsPlaceholder() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.transparent),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: const Icon(Icons.image, color: Colors.white24, size: 40),
-          ),
-          const SizedBox(height: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Kategori
-              Container(
-                height: 10,
-                width: 60,
-                color: Colors.blueAccent.withOpacity(0.3),
-              ),
-              const SizedBox(height: 12),
-              // Judul
-              Container(
-                height: 18,
-                width: double.infinity,
-                color: Colors.white10,
-              ),
-              const SizedBox(height: 10),
-              //Konten
-              Container(
-                height: 18,
-                width: double.infinity,
-                color: Colors.white10,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(height: 18, width: 200, color: Colors.white10),
-                  Container(height: 18, width: 200, color: Colors.white10),
-                ],
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

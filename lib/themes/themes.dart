@@ -12,7 +12,6 @@ class AppTheme {
       useMaterial3: true,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.primary,
-
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
         primary: AppColors.primary,
@@ -26,11 +25,9 @@ class AppTheme {
         titleLarge: TextStyle(color: Colors.white),
         headlineMedium: TextStyle(color: Colors.white),
       ),
-
-      // Tambahkan ini juga agar warna AppBar ikut berubah
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent, // Menggunakan secondary (#0F172A)
-        foregroundColor: Colors.white, // Warna teks & icon di AppBar
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
       ),
     );
   }

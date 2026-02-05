@@ -39,6 +39,12 @@ flutter:
     - assets/images/logo_putih.webp
     - assets/images/IMG_1344.JPG
     - assets/images/author.webp
+    - assets/images/Alam.webp
+    - assets/images/Budaya.webp
+    - assets/images/Budaya 2.webp
+    - assets/images/Suara.webp
+    - assets/images/SUARA 2.webp
+    - assets/images/Berdaya.webp
 
   fonts:
     - family: judul
