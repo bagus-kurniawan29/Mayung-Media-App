@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mayung_media/recent_news.dart';
 import 'package:mayung_media/themes/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mayung_media/news_item.dart';
-// import 'package:http/http.dart' as http; // API
-// import 'dart:convert';
-// import 'package:sqflite/sqflite.dart'; // Database
+import 'dart:async';
 
 void main() => runApp(
   MaterialApp(
@@ -24,11 +21,62 @@ class MayungApp extends StatefulWidget {
 }
 
 class _MayungAppState extends State<MayungApp> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  Timer? _timer;
+
+  
+  final List<Map<String, String>> _featuredData = [
+    {
+      'kategori': 'BERDAYA',
+      'judul':
+          'Fakultas Teknik Universitas Hamzanwadi sukses menggelar IRIC 2026',
+      'image': 'assets/images/IMG_1344.JPG',
+      'date': '27 January 2026',
+    },
+    {
+      'kategori': 'ALAM',
+      'judul': 'Menelusuri Jejak Pangan Lokal di Lereng Rinjani Lombok Utara',
+      'image': 'assets/images/Alam.webp',
+      'date': '01 February 2026',
+    },
+    {
+      'kategori': 'BUDAYA',
+      'judul': 'Eksistensi Cupak Gerantang di Era Gempuran Digital',
+      'image': 'assets/images/budaya 2.webp',
+      'date': '27 January 2026',
+    },
+  ];
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (_currentPage < _featuredData.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0; 
+      }
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 800), 
+          curve: Curves.easeInOutQuint, 
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); 
+    _pageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actionsPadding: EdgeInsets.symmetric(horizontal: 16),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 16),
         title: Image.asset(
           'assets/images/logo_putih.webp',
           width: 50,
@@ -62,11 +110,11 @@ class _MayungAppState extends State<MayungApp> {
                 child: Divider(thickness: 1, color: Colors.white24),
               ),
 
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     RecentNews(
@@ -75,362 +123,307 @@ class _MayungAppState extends State<MayungApp> {
                           'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
                       author: 'Redaksi Mayung Media',
                       konten:
-                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
-                      tanggal: '01-Februari-2026',
+                          "Upaya pemetaan kembali kekayaan pangan lokal di Desa Karang Bajo sebagai langkah penyelamatan kedaulatan pangan di tengah ancaman krisis iklim global.",
                       views: '231',
+                      tanggal: '01-2-2026',
                       imagepath: 'assets/images/Alam.webp',
                     ),
                     RecentNews(
                       kategori: 'BERDAYA',
                       judul:
-                          'Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara',
+                          'FT Hamzanwadi Sukses Gelar Informatics Robotic Innovation Cup 2026',
                       author: 'Redaksi Mayung Media',
                       konten:
-                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
-                      tanggal: '01-Februari-2026',
-                      views: '231',
+                          "Ajang IRIC 2026 menjadi panggung inovasi bagi talenta muda. Kompetisi ini berhasil menarik antusiasme peserta hingga dari luar Pulau Lombok.",
+                      views: '452',
+                      tanggal: '01-2-2026',
                       imagepath: 'assets/images/IMG_1344.JPG',
                     ),
                     RecentNews(
                       kategori: 'BUDAYA',
                       judul:
-                          'Cupak Gerantang, Dari Dongeng Tidur Hingga Pentas Jalanan',
+                          'Cupak Gerantang: Dari Dongeng Tidur Hingga Pentas Jalanan',
                       author: 'Redaksi Mayung Media',
                       konten:
-                          "Tjoepak bebeling : ‘’ Adi’ Gerantang, tain apa ? / meni bele’ penoempoekna mara’ gili ?...",
-                      tanggal: '27-Januari-2026',
+                          "Menelusuri jejak tradisi lisan Sasak, Cupak Gerantang bukan sekadar dongeng, melainkan refleksi karakter manusia yang tertuang dalam seni pertunjukan.",
                       views: '189',
+                      tanggal: '01-2-2026',
                       imagepath: 'assets/images/budaya 2.webp',
                     ),
-
-                    // BERITA 4: SUARA
                     RecentNews(
                       kategori: 'SUARA',
-                      judul: 'Keluarga Nomaden di kawasan Wisata Medana',
+                      judul: 'Kisah Keluarga Nomaden di Kawasan Wisata Medana',
                       author: 'Fathul Rakhman',
                       konten:
-                          "Tinggal di kawasan pariwisata Medana tidak membuat hidup Kerta lebih baik. Bersama istri dan enam anaknya, Kerta hidup terlunta-lunta...",
-                      tanggal: '27-Januari-2026',
+                          "Potret getir kehidupan Kerta dan keluarga yang hidup berpindah-pindah di tengah kemilau pembangunan kawasan pariwisata elit di Lombok Utara.",
                       views: '312',
+                      tanggal: '01-2-2026',
                       imagepath: 'assets/images/SUARA 2.webp',
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16.0),
-                color: AppColors.secondary,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ALAM',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontFamily: 'judul',
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Lihat Semua',
-                          style: TextStyle(
-                            fontFamily: 'primary',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Divider(thickness: 1, color: Colors.white10),
-                    const SizedBox(height: 16),
-                    NewsItem(
-                      judul:
-                          "Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara",
-                      kategori: "ALAM",
-                      konten:
-                          "Di lereng perbukitan yang kering di Desa Karang Bajo, Kecamatan Bayan, Kabupaten Lombok Utara, sebuah gerakan konservasi tengah berlangsung. Para pemuda dari berbagai organisasi bersama komunitas masyarakat adat sedang berupaya memetakan kembali kekayaan pangan lokal yang kian tergerus zaman. Identifikasi ini bukan sekadar pendataan biologis, melainkan upaya menyelamatkan kedaulatan pangan di tengah ancaman krisis iklim.",
-                      tanggal: '01-02-2006',
-                      author: 'Redaksi Mayung Media',
-                      Imagepath: 'assets/images/Alam.webp',
-                    ),
-                    const SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'BERDAYA',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontFamily: 'judul',
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Lihat Semua',
-                          style: TextStyle(
-                            fontFamily: 'primary',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Divider(thickness: 1, color: Colors.white10),
-                    const SizedBox(height: 16),
-                    NewsItem(
-                      judul:
-                          "Fakultas Teknik Universtas Hamzanwadi sukses menggelar INFORMATICS ROBOTICS INOVATION CUP 2026",
-                      kategori: "BERDAYA",
-                      konten:
-                          "Fakultas Teknik Universitas Hamzanwadi sukses menuntaskan perhelatan bergengsi Informatics Robotic Innovation Cup (IRIC) 2026. Dimulai sejak Jumat (23/01), ajang ini berhasil menjadi panggung inovasi bagi talenta-talenta muda di bidang teknologi dan robotika.",
-                      tanggal: '27-01-2006',
-                      author: 'Redaksi Mayung Media',
-                      Imagepath: 'assets/images/IMG_1344.JPG',
-                    ),
 
-                    const SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'BUDAYA',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontFamily: 'judul',
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Lihat Semua',
-                          style: TextStyle(
-                            fontFamily: 'primary',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Divider(thickness: 1, color: Colors.white10),
-                    const SizedBox(height: 16),
-                    NewsItem(
-                      judul:
-                          "Cupak Gerantang, Dari Dongeng Tidur Hingga Pentas Jalanan",
-                      kategori: "BUDAYA",
-                      konten:
-                          "Tjoepak bebeling : ‘’ Adi’ Gerantang, tain apa ? / meni bele’ penoempoekna mara’ gili ? / ‘’ Ia mene’ tain Limandaroeng ‘’ / Lo’ Tjoepak gigit perangenna / peno’ sedo’ gigi ngerejot soegoel daoer / ‘’ Doeh mas mirah adi’ Gerantang, ente pada oele’ malik ‘’",
-                      tanggal: '27-01-2006',
-                      author: 'Redaksi Mayung Media',
-                      Imagepath: 'assets/images/budaya 2.webp',
-                    ),
-                    const SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'SUARA',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontFamily: 'judul',
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Lihat Semua',
-                          style: TextStyle(
-                            fontFamily: 'primary',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Divider(thickness: 1, color: Colors.white10),
-                    const SizedBox(height: 16),
-                    NewsItem(
-                      judul: "Keluarga Nomaden di kawasann Wisata",
-                      kategori: "SUARA",
-                      konten:
-                          "Tinggal di kawasan pariwisata Medana, Kecamatan Tanjung, Kabupaten Lombok Utara tidak membuat hidup Kerta lebih baik. Bersama istri dan enam orang anaknya, Kerta hidup terlunta-lunta. Pindah dari satu tanah kosong ke tanah kosong lainnya. Kadang membuat gubuk di pinggir pantai. Dia tidak terlahir sebagai orang terlantar, keluarganya pernah memiliki tanah di kawasan pariwisata itu. Di tanah bekas milik keluarganya itulah Kerta menumpang. Inilah kisah tentang Kerta dan ‘’orang-orang kalah’’ di kawasan pariwisata.",
-                      tanggal: '27-01-2006',
-                      author: 'Fathul Rakhman',
-                      Imagepath: 'assets/images/SUARA 2.webp',
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 16),
+
+              
+              _buildCategoryBlock(
+                'ALAM',
+                "Geopark Rinjani Ajak Anak Muda Menelusuri Jejak Pangan Lokal di Lombok Utara",
+                'assets/images/Alam.webp',
+                'Redaksi Mayung Media',
               ),
-              //footer
-              Padding(
-                padding: EdgeInsetsGeometry.symmetric(
-                  horizontal: 25,
-                  vertical: 60,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      'assets/images/logo_putih.webp',
-                      height: 80,
-                      width: 80,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Mayung Media adalah kanal berita di Nusa Tenggara Barat. Kami menyajikan informasi secara lebih mendalam.',
-                      style: TextStyle(
-                        fontFamily: 'primary',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Hubungi Kami',
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'mayung.id@gmail.com',
-                      style: TextStyle(
-                        fontFamily: 'primary',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Media Sosial',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 23,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: FaIcon(
-                            FontAwesomeIcons.facebook,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: FaIcon(
-                            FontAwesomeIcons.instagram,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: FaIcon(
-                            FontAwesomeIcons.tiktok,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _buildCategoryBlock(
+                'BERDAYA',
+                "FT Hamzanwadi Sukses Gelar Informatics Robotic Innovation Cup 2026",
+                'assets/images/IMG_1344.JPG',
+                'Redaksi Mayung Media',
               ),
-              //EndFooter
+              _buildCategoryBlock(
+                'BUDAYA',
+                "Cupak Gerantang: Tradisi Sasak yang Tetap Eksis di Era Modern",
+                'assets/images/budaya 2.webp',
+                'Redaksi Mayung Media',
+              ),
+              _buildCategoryBlock(
+                'SUARA',
+                "Potret Keluarga Nomaden: Tantangan di Tengah Kemajuan Wisata",
+                'assets/images/SUARA 2.webp',
+                'Fathul Rakhman',
+              ),
+              _buildFooter(),
             ],
           ),
         ),
       ),
     );
   }
-
-  //WIDGET//
   Widget _buildFeaturedNews() {
-    return Container(
+    return SizedBox(
       height: 300,
       width: double.infinity,
-      child: ClipRRect(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Image.asset(
-              'assets/images/IMG_1344.JPG',
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+      child: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (int page) => setState(() => _currentPage = page),
+            itemCount: _featuredData.length,
+            itemBuilder: (context, index) =>
+                _buildSlideItem(_featuredData[index]),
+          ),
+          Positioned(
+            bottom: 15,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _featuredData.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  height: 8,
+                  width: _currentPage == index ? 25 : 8,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index
+                        ? Colors.blue
+                        : Colors.white70,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    color: Colors.blue,
-                    child: const Text(
-                      "BERDAYA",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Fakultas Teknik Universtas Hamzanwadi sukses menggelar INFORMATICS ROBOTICS INOVATION CUP 2026",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'judul',
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "Oleh Redaksi Mayung Media  •  27 January 2026",
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSlideItem(Map<String, String> data) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Image.asset(
+          data['image']!,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
         ),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.transparent, Colors.black.withOpacity(0.9)],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
+                color: data['kategori'] == 'ALAM'
+                    ? Colors.green
+                    : Colors.orange,
+                child: Text(
+                  data['kategori']!,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                data['judul']!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: 'judul',
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                "Oleh Redaksi Mayung Media • ${data['date']}",
+                style: const TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCategoryBlock(
+    String category,
+    String title,
+    String img,
+    String author,
+  ) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16.0),
+      color: category == 'ALAM'
+          ? AppColors.secondary
+          : Colors.transparent, 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category,
+                style: const TextStyle(
+                  fontSize: 21,
+                  fontFamily: 'judul',
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 3,
+                  color: Colors.white,
+                ),
+              ),
+              const Text(
+                'Lihat Semua',
+                style: TextStyle(
+                  fontFamily: 'primary',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Divider(thickness: 1, color: Colors.white10),
+          const SizedBox(height: 16),
+          NewsItem(
+            judul: title,
+            kategori: category,
+            konten:
+                "Informasi mendalam mengenai perkembangan terbaru di sektor $category Nusa Tenggara Barat...",
+            tanggal: '2026-02-05',
+            author: author,
+            Imagepath: img,
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 60),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset('assets/images/logo_putih.webp', height: 80, width: 80),
+          const SizedBox(height: 20),
+          const Text(
+            'Mayung Media adalah kanal berita di Nusa Tenggara Barat. Kami menyajikan informasi secara lebih mendalam.',
+            style: TextStyle(
+              fontFamily: 'primary',
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            'Hubungi Kami',
+            style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'mayung.id@gmail.com',
+            style: TextStyle(
+              fontFamily: 'primary',
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            'Media Sosial',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const FaIcon(
+                  FontAwesomeIcons.facebook,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const FaIcon(
+                  FontAwesomeIcons.instagram,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const FaIcon(
+                  FontAwesomeIcons.tiktok,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
