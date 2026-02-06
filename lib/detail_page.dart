@@ -115,7 +115,7 @@ class DetailPage extends StatelessWidget {
                     context,
                     kategori: 'BUDAYA',
                     judul: 'Cupak Gerantang: Dari Dongeng Tidur Hingga Pentas Jalanan',
-                    img: 'assets/images/budaya 2.webp',
+                    img: 'assets/images/Budaya 2.webp',
                   ),
                   const SizedBox(height: 40),
                 ],
